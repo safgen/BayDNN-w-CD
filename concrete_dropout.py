@@ -60,10 +60,9 @@ class ConcreteDropout(Wrapper):
         super(ConcreteDropout, self).build()  # this is very weird.. we must call super before we add new losses
 
         # initialise p
-        self.p_logit = self.layer.add_weight(name='p_logit',
-                                            shape=(1,),
-                                            initializer=initializers.RandomUniform(self.init_min, self.init_max),
-                                            trainable=True)
+        self.p_logit = self.layer.add_weight(name='p_logit', shape=(1,),
+                                             initializer=initializers.RandomUniform(self.init_min, self.init_max),
+                                             trainable=True)
         self.p = K.sigmoid(self.p_logit[0])
 
         # initialise regulariser / prior KL term
