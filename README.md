@@ -5,3 +5,7 @@ http://torch.ch/blog/2015/07/30/cifar.html
 
 This pretrained network is then fine tuned using Concrete Dropout described in the following paper:
 http://papers.neurips.cc/paper/6949-concrete-dropout.pdf
+
+LATEST ACCURACIES:
+Test accuracy after pretraining: 0.87
+Test accuracy after fine-tuning with concrete dropout: 0.89
