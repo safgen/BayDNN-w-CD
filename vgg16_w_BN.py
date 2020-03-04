@@ -117,6 +117,7 @@ def get_vgg16bn_with_concrete_dropout(model):
     return Model(inputs=model.input, outputs=x, name='vgg16_bn_cd')
 
 
+ADAM_OPTIM = True  # Toggle to switch between adam and SGD optimizers
 (X_train, y_train), (X_test, y_test) = datasets.cifar10.load_data()
 
 # print("******************")
@@ -144,12 +145,15 @@ X_test /= 255
 
 # PRETRAINING WITH DROPOUT
 
-# initiate SGD optimizer
-sgd = optimizers.SGD(lr=0.001, momentum=0.9)
+# initiate optimizer
+if ADAM_OPTIM:
+    opt = optimizers.adam()
+else:
+    opt = optimizers.SGD(lr=0.001, momentum=0.9)
 
 # For a multi-class classification problem
 model = VGG16_BN(input_shape=(X_train.shape[1], X_train.shape[2], X_train.shape[3]))
-model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
 es = EarlyStopping(patience=5, monitor='val_accuracy', mode='max')
 mc = ModelCheckpoint('./vgg.h5', monitor='val_accuracy', save_best_only=True, mode='max')
@@ -184,14 +188,17 @@ train_loss, train_score = model.evaluate(X_train, y_train_ohe)
 test_loss, test_score = model.evaluate(X_test, y_test_ohe)
 # print("Train Loss:", train_loss)
 # print("Test Loss:", test_loss)
-print("Training accuracy after pretraining:", train_score)
-print("Test accuracy after pretraining:", test_score)
+
+# File for printing results
+res = sample = open('results.txt', 'a')
+print("Training accuracy after pretraining:", train_score, file=res)
+print("Test accuracy after pretraining:", test_score,  file=res)
 
 # TRAINING THE CNN ON THE TRAIN/VALIDATION DATA FOR FINE TUNING
 
 # get the model with concrete dropout layers
 model_FT = get_vgg16bn_with_concrete_dropout(model=model)
-model_FT.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+model_FT.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
 mc = ModelCheckpoint('./vgg_FT.h5', monitor='val_accuracy', save_best_only=True, mode='max')
 
@@ -214,5 +221,6 @@ train_loss, train_score = model_FT.evaluate(X_train, y_train_ohe)
 test_loss, test_score = model_FT.evaluate(X_test, y_test_ohe)
 # print("Train Loss:", train_loss)
 # print("Test Loss:", test_loss)
-print("Train accuracy after fine-training with concrete dropout:", train_score)
-print("Test accuracy after fine-training with concrete dropout:", test_score)
+print("Train accuracy after fine-tuning with concrete dropout:", train_score, file=res)
+print("Test accuracy after fine-tuning with concrete dropout:", test_score, file=res)
+res.close()

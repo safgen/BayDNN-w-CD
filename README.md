@@ -7,5 +7,11 @@ This pretrained network is then fine tuned using Concrete Dropout described in t
 http://papers.neurips.cc/paper/6949-concrete-dropout.pdf
 
 LATEST ACCURACIES:
-Test accuracy after pretraining: 0.87
-Test accuracy after fine-tuning with concrete dropout: 0.89
+
+Training accuracy after pretraining: 0.9164199829101562
+
+Test accuracy after pretraining: 0.8870000243186951
+
+Train accuracy after fine-tuning with concrete dropout: 0.9259999990463257, 
+
+Test accuracy after fine-tuning with concrete dropout: 0.9019000029563904
