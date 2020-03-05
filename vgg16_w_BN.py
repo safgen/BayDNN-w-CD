@@ -180,7 +180,7 @@ model.load_weights('./vgg.h5')
 # PREDICT AND EVALUATE THE PRETRAINED NETWORK
 # ------------------------------------------------------------------------------
 preds = model.predict(X_test)
-score_test = accuracy_score( y_test, np.argmax(preds, axis=1) )
+score_test = accuracy_score( y_test, np.argmax(preds, axis=1))
 print ('Test Score : ', score_test)
 
 

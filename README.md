@@ -8,10 +8,10 @@ http://papers.neurips.cc/paper/6949-concrete-dropout.pdf
 
 LATEST ACCURACIES:
 
-Training accuracy after pretraining: 0.9164199829101562
+Training accuracy after pretraining: 0.94
 
-Test accuracy after pretraining: 0.8870000243186951
+Test accuracy after pretraining: 0.9
 
-Train accuracy after fine-tuning with concrete dropout: 0.9259999990463257, 
+Train accuracy after fine-tuning with concrete dropout: 0.95
 
-Test accuracy after fine-tuning with concrete dropout: 0.9019000029563904
+Test accuracy after fine-tuning with concrete dropout: 0.92

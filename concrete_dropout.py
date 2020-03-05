@@ -69,7 +69,7 @@ class ConcreteDropout(Wrapper):
         assert len(input_shape) == 2, 'this wrapper only supports Dense layers'
         input_dim = np.prod(input_shape[-1])  # we drop only last dim
         weight = self.layer.kernel
-        kernel_regularizer = self.weight_regularizer * K.sum(K.square(weight)) / (1. - self.p)
+        kernel_regularizer = self.weight_regularizer * K.sum(K.square(weight)) * (1. - self.p)
         dropout_regularizer = self.p * K.log(self.p)
         dropout_regularizer += (1. - self.p) * K.log(1. - self.p)
         dropout_regularizer *= self.dropout_regularizer * input_dim
