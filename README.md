@@ -1,17 +1,7 @@
 # BayDNN-w-CD
 This repository consists of VGG16 network with batch normalization. The network was trained on 
-CIFAR-10 dataset using the network configuration (specifically Dropout) described here:
-http://torch.ch/blog/2015/07/30/cifar.html
+CIFAR-10 dataset using standard dropout.
 
 This pretrained network is then fine tuned using Concrete Dropout described in the following paper:
 http://papers.neurips.cc/paper/6949-concrete-dropout.pdf
 
-LATEST ACCURACIES:
-
-Training accuracy after pretraining: 0.94
-
-Test accuracy after pretraining: 0.9
-
-Train accuracy after fine-tuning with concrete dropout: 0.95
-
-Test accuracy after fine-tuning with concrete dropout: 0.92
